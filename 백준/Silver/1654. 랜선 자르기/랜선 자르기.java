@@ -9,7 +9,7 @@ public class Main {
 	private static int UpperBinarySearch(long min, long max) {
 		long mid = 0;
 		
-		while(min < max) {
+		while(min <= max) {
 			int cnt = 0;
 			mid = (min + max) / 2;
 			
@@ -17,10 +17,10 @@ public class Main {
 				cnt += arr[i] / mid;
 			}
 			
-			if(cnt < n) max = mid;
+			if(cnt < n) max = mid - 1;
 			else min = mid + 1;
 		}
-		return (int)min - 1;
+		return (int)max;
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -37,7 +37,7 @@ public class Main {
 			if(max < arr[i]) max = arr[i];
 		}
 		
-		System.out.println(UpperBinarySearch(0, max + 1));
+		System.out.println(UpperBinarySearch(1, max));
 	}
 	
 }
