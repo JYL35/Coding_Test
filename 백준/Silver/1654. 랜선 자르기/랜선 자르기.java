@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 
-public class Main {
+public class Num1654 {
 	static int k, n;
 	static int[] arr;
 	
-	private static int UpperBinarySearch(long min, long max) {
+	private static int BinarySearch(long min, long max) {
 		long mid = 0;
 		
 		while(min <= max) {
@@ -37,7 +37,7 @@ public class Main {
 			if(max < arr[i]) max = arr[i];
 		}
 		
-		System.out.println(UpperBinarySearch(1, max));
+		System.out.println(BinarySearch(1, max));
 	}
 	
 }
