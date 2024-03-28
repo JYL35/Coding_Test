@@ -6,7 +6,7 @@ public class Main {
 	static int k, n;
 	static int[] arr;
 	
-	private static long UpperBinarySearch(long min, long max) {
+	private static int UpperBinarySearch(long min, long max) {
 		long mid = 0;
 		
 		while(min < max) {
@@ -20,7 +20,7 @@ public class Main {
 			if(cnt < n) max = mid;
 			else min = mid + 1;
 		}
-		return min - 1;
+		return (int)min - 1;
 	}
 	
 	public static void main(String[] args) throws IOException {
