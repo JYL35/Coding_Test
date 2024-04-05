@@ -21,7 +21,6 @@ public class Main {
 		Arrays.sort(arr);
 		
 		String[] resultArr = new String[m];
-		StringBuilder sb = new StringBuilder();
 		int cnt = 0;
 		
 		for (int i = 0; i < m; i++) {
