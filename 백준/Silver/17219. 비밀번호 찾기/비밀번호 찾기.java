@@ -20,8 +20,7 @@ public class Main {
 		
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < m; i++) {
-			String[] s = br.readLine().split(" ");
-			sb.append(map.get(s[0])).append("\n");
+			sb.append(map.get(br.readLine())).append("\n");
 		}
 		
 		System.out.println(sb);
