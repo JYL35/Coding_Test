@@ -10,7 +10,7 @@ public class Main {
 		for (int i = 0; i <= n; i++) {
 			for (int j = 0; j <= i; j++) {
 				if(j == 0 || j == i) dp[i][j] = 1;
-				else dp[i][j] = (dp[i-1][j] % 10007 + dp[i-1][j-1] % 10007) % 10007;
+				else dp[i][j] = (dp[i-1][j] + dp[i-1][j-1]) % 10007;
 				
 				if(i == n && j == k) return dp[n][k];
 			}
