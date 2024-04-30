@@ -15,9 +15,11 @@ public class Main {
 
         while(!stack.isEmpty()){
             int i = stack.pop();
-            visit[i] = true;
-            for (int j = 1; j <= n; j++) {
-                if(edge[i][j] && !visit[j]) stack.push(j);
+            if(!visit[i]){
+                visit[i] = true;
+                for (int j = 1; j <= n; j++) {
+                    if(edge[i][j] && !visit[j]) stack.push(j);
+                }
             }
         }
     }
