@@ -9,18 +9,17 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int t = Integer.parseInt(br.readLine());
+        
         long[] dp = new long[101];
         dp[1] = 1;
         dp[2] = 1;
         dp[3] = 1;
+        for (int i = 4; i < 101; i++) {
+            dp[i] = dp[i-3] + dp[i-2];
+        }
 
         while(t-- > 0){
-            int n = Integer.parseInt(br.readLine());
-
-            for (int i = 4; i <= n; i++) {
-                dp[i] = dp[i-3] + dp[i-2];
-            }
-            sb.append(dp[n]).append("\n");
+            sb.append(dp[Integer.parseInt(br.readLine())]).append("\n");
         }
         System.out.println(sb);
     }
