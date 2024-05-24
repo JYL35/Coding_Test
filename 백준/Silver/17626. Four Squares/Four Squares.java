@@ -14,7 +14,7 @@ public class Main {
             int min = Integer.MAX_VALUE;
             for (int j = 1; j * j <= i; j++) {
                 int temp = i - j * j;
-                min = dp[temp] < min ? dp[temp] : min;
+                min = Math.min(min, dp[temp]);
             }
             dp[i] = min + 1;
         }
