@@ -1,16 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
 import java.util.StringTokenizer;
-
-class Node {
-    int x, y;
-    Node(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
 
 public class Main {
     static boolean[][] graph, visit;
@@ -18,21 +9,15 @@ public class Main {
     static int n, m, k;
 
     private static void DFS(int x, int y){
-        Stack<Node> stack = new Stack<>();
-        stack.push(new Node(x, y));
+        visit[x][y] = true;
 
-        while(!stack.isEmpty()){
-            Node node = stack.pop();
-            visit[node.x][node.y] = true;
+        for (int i = 0; i < 4; i++) {
+            int next_x = x + dirArr[i][0];
+            int next_y = y + dirArr[i][1];
 
-            for (int i = 0; i < 4; i++) {
-                int next_x = node.x + dirArr[i][0];
-                int next_y = node.y + dirArr[i][1];
-
-                if(next_x < 0 || next_x >= n || next_y < 0 || next_y >= m) continue;
-                if(!visit[next_x][next_y] && graph[next_x][next_y]){
-                    stack.push(new Node(next_x, next_y));
-                }
+            if(next_x < 0 || next_x >= n || next_y < 0 || next_y >= m) continue;
+            if(!visit[next_x][next_y] && graph[next_x][next_y]){
+                DFS(next_x, next_y);
             }
         }
     }
