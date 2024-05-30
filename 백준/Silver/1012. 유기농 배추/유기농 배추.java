@@ -1,45 +1,38 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+class Node {
+    int x, y;
+    Node(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class Main {
     static boolean[][] graph, visit;
-    static Stack<Integer[]> stack = new Stack<>();
+    static int[][] dirArr = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    static int n, m, k;
 
-    private static int warmCount(int n, int m) {
-        int count = 0;
+    private static void DFS(int x, int y){
+        Stack<Node> stack = new Stack<>();
+        stack.push(new Node(x, y));
 
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                if(graph[i][j] && !visit[i][j]){
-                    path(i, j);
-                    count++;
+        while(!stack.isEmpty()){
+            Node node = stack.pop();
+            visit[node.x][node.y] = true;
+
+            for (int i = 0; i < 4; i++) {
+                int next_x = node.x + dirArr[i][0];
+                int next_y = node.y + dirArr[i][1];
+
+                if(next_x < 0 || next_x >= n || next_y < 0 || next_y >= m) continue;
+                if(!visit[next_x][next_y] && graph[next_x][next_y]){
+                    stack.push(new Node(next_x, next_y));
                 }
-            }
-        }
-
-        return count;
-    }
-
-    private static void path(int i, int j){
-        int[][] dirArr = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-
-        Integer[] arr = {i, j};
-        stack.push(arr);
-        int x = stack.peek()[0];
-        int y = stack.pop()[1];
-        int dir = 0;
-        while(dir < 4){
-            int next_i = x + dirArr[dir][0];
-            int next_j = y + dirArr[dir][1];
-            if(!graph[next_i][next_j] || visit[next_i][next_j]) {
-                dir++;
-            }
-            else if(graph[next_i][next_j] && !visit[next_i][next_j]){
-                Integer[] tempArr = {next_i, next_j};
-                stack.push(tempArr);
-                visit[next_i][next_j] = true;
-                path(next_i, next_j);
             }
         }
     }
@@ -51,19 +44,29 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         while(t-- > 0){
+            int count = 0;
             st = new StringTokenizer(br.readLine());
-            int n = Integer.parseInt(st.nextToken());
-            int m = Integer.parseInt(st.nextToken());
-            int k = Integer.parseInt(st.nextToken());
+            n = Integer.parseInt(st.nextToken());
+            m = Integer.parseInt(st.nextToken());
+            k = Integer.parseInt(st.nextToken());
 
-            graph = new boolean[n+2][m+2];
-            visit = new boolean[n+2][m+2];
+            graph = new boolean[n][m];
+            visit = new boolean[n][m];
 
             while(k-- > 0){
                 String[] s = br.readLine().split(" ");
-                graph[Integer.parseInt(s[0])+1][Integer.parseInt(s[1])+1] = true;
+                graph[Integer.parseInt(s[0])][Integer.parseInt(s[1])] = true;
             }
-            sb.append(warmCount(n, m)).append("\n");
+
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if(!visit[i][j] && graph[i][j]){
+                        DFS(i, j);
+                        count++;
+                    }
+                }
+            }
+            sb.append(count).append("\n");
         }
         System.out.println(sb);
     }
