@@ -9,29 +9,20 @@ public class Main {
     static boolean[] visit;
     static boolean[][] graph;
 
-    private static int countComponent() {
-        int count = 0;
-
-        for (int i = 1; i <= n; i++) {
-            if(visit[i]) continue;
-            Stack<Integer> stack = new Stack<>();
-            stack.push(i);
-            while(!stack.isEmpty()){
-                int u = stack.pop();
-                if(!visit[u]){
-                    visit[u] = true;
-                    for (int v = 1; v <= n; v++) {
-                        if(graph[u][v] && !visit[v]) {
-                            stack.push(v);
-                        }
+    private static void DFS(int start) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(start);
+        while(!stack.isEmpty()){
+            int u = stack.pop();
+            if(!visit[u]){
+                visit[u] = true;
+                for (int v = 1; v <= n; v++) {
+                    if(graph[u][v] && !visit[v]) {
+                        stack.push(v);
                     }
                 }
             }
-            count++;
         }
-
-
-        return count;
     }
 
     public static void main(String[] args) throws IOException{
@@ -53,6 +44,15 @@ public class Main {
             graph[v][u] = true;
         }
 
-        System.out.println(countComponent());
+        int count = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if(!visit[i]) {
+                DFS(i);
+                count++;
+            }
+        }
+
+        System.out.println(count);
     }
 }
