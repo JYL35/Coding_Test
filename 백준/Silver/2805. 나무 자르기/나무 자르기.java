@@ -38,6 +38,6 @@ public class Main {
             if(tallTree < treeArr[i]) tallTree = treeArr[i];
         }
 
-        System.out.println(binarySearch(0, tallTree) - 1);;
+        System.out.println(binarySearch(0, tallTree) - 1);
     }
 }
