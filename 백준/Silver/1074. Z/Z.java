@@ -10,11 +10,11 @@ public class Main {
         if(mid == 0) return;
 
         if(x < mid && y < mid) Divide(x, y, mid / 2);
-        else if(x < mid && y >= mid) {
+        else if(x < mid) {
             result += mid * mid;
             Divide(x, y - mid, mid / 2);
         }
-        else if(x >= mid && y < mid) {
+        else if(y < mid) {
             result += mid * mid * 2;
             Divide(x - mid, y, mid / 2);
         }
