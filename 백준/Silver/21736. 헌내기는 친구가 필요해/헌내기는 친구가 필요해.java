@@ -6,9 +6,9 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int n, m;
-    static String[][] map;
+    static char[][] map;
     static boolean[][] visit;
-    static int[][] dirArr = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    static final int[][] dirArr = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
     private static int DFS(int x, int y) {
         int count = 0;
@@ -17,18 +17,19 @@ public class Main {
         stack.push(new int[]{x, y});
         while(!stack.isEmpty()) {
             int[] current = stack.pop();
-            if(!visit[current[0]][current[1]]) {
-                visit[current[0]][current[1]] = true;
-                if(map[current[0]][current[1]].equals("P")) count++;
-                for (int i = 0; i < 4; i++) {
-                    int nextX = current[0] + dirArr[i][0];
-                    int nextY = current[1] + dirArr[i][1];
+            int curX = current[0], curY = current[1];
 
-                    if(nextX < 0 || nextY < 0 || nextX >= n || nextY >= m) continue;
-                    if(visit[nextX][nextY] || map[nextX][nextY].equals("X")) continue;
+            if(map[curX][curY] == 'P') count++;
 
-                    stack.push(new int[]{nextX, nextY});
-                }
+            for (int[] dir : dirArr) {
+                int nextX = curX + dir[0];
+                int nextY = curY + dir[1];
+
+                if(nextX < 0 || nextY < 0 || nextX >= n || nextY >= m) continue;
+                if(visit[nextX][nextY] || map[nextX][nextY] == 'X') continue;
+
+                visit[nextX][nextY] = true;
+                stack.push(new int[]{nextX, nextY});
             }
         }
 
@@ -42,13 +43,13 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
         int x = 0, y = 0;
 
-        map = new String[n][m];
+        map = new char[n][m];
         visit = new boolean[n][m];
         for (int i = 0; i < n; i++) {
-            String[] arr = br.readLine().split("");
+            String str = br.readLine();
             for (int j = 0; j < m; j++) {
-                map[i][j] = arr[j];
-                if(map[i][j].equals("I")) {
+                map[i][j] = str.charAt(j);
+                if(map[i][j] == 'I') {
                     x = i;
                     y = j;
                 }
@@ -56,7 +57,6 @@ public class Main {
         }
 
         int result = DFS(x, y);
-        if(result == 0) System.out.println("TT");
-        else System.out.println(result);
+        System.out.println(result == 0 ? "TT" : result);
     }
 }
