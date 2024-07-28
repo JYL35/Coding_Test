@@ -11,10 +11,10 @@ public class Main {
     static boolean[][] visit;
     static int[][] dirArr = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-    private static void BFS() {
+    private static int BFS() {
         Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{1, 1});
-        //int minCount = Integer.MAX_VALUE;
+        queue.add(new int[]{0, 0});
+        visit[0][0] = true;
 
         while(!queue.isEmpty()) {
             int[] temp = queue.poll();
@@ -24,13 +24,15 @@ public class Main {
                 int nextX = x + dirArr[i][0];
                 int nextY = y + dirArr[i][1];
 
-                if(nextX < 1 || nextY < 1 || nextX > n || nextY > m) continue;
-                if(maze[nextX][nextY] == 0 || maze[nextX][nextY] <= maze[x][y] + 1) continue;
+                if(nextX < 0 || nextY < 0 || nextX >= n || nextY >= m) continue;
+                if(visit[nextX][nextY] || maze[nextX][nextY] == 0) continue;
 
                 maze[nextX][nextY] = maze[x][y] + 1;
+                visit[nextX][nextY] = true;
                 queue.add(new int[]{nextX, nextY});
             }
         }
+        return maze[n-1][m-1];
     }
 
     public static void main(String[] args) throws IOException {
@@ -39,18 +41,16 @@ public class Main {
 
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        maze = new int[n+1][m+1];
-        visit = new boolean[n+1][m+1];
+        maze = new int[n][m];
+        visit = new boolean[n][m];
 
-        for (int i = 1; i <= n; i++) {
-            String[] arr = br.readLine().split("");
-            for (int j = 1; j <= m; j++) {
-                if(arr[j-1].equals("1")) maze[i][j] = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            String str = br.readLine();
+            for (int j = 0; j < m; j++) {
+                maze[i][j] = str.charAt(j) - '0';
             }
         }
-        maze[1][1] = 1;
-        BFS();
-        System.out.println(maze[n][m]);
+        System.out.println(BFS());
     }
 
 }
