@@ -10,22 +10,23 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
         String s = br.readLine();
+        int count = 0, result = 0;
 
-        String p = "I";
-        for (int i = 0; i < n; i++) {
-            p += "OI";
-        }
-
-        int count = 0;
-        int len = p.length();
-
-        for (int i = 0; i <= m - len; i++) {
-            if(s.charAt(i) == 'I') {
-                if(p.equals(s.substring(i, i + len))) count++;
+        for (int i = 1; i < m-1;) {
+            if(s.charAt(i) == 'O' && s.charAt(i+1) == 'I') {
+                count++;
+                if(count == n) {
+                    if(s.charAt(i-(count*2-1)) == 'I') result++;
+                    count--;
+                }
+                i += 2;
+            }
+            else {
+                count = 0;
+                i++;
             }
         }
-
-        System.out.println(count);
+        System.out.println(result);
     }
 
 }
